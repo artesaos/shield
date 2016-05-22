@@ -80,3 +80,45 @@ class UsersServiceProvider extends ServiceProvider
 }
 ```
 
+#### 2 - Defining rules
+
+The rules file is quite simple, it returns an array as configuration of the own laravel.
+Within this array you have a key called `rules` and within it you have up to three keys: `default`, `updating` and `creating`.
+
+As you will see later on you can retrieve the rules with these three contexts.
+The key `default` will be in all contexts. The others will merge with `default` as they are requested.
+
+```php
+# path/of/namespace/file_rule.php
+return [
+    'rules' => [
+        'default' => [
+            // default rules
+        ],
+        'updating' => [
+            // updating rules
+        ],
+        'creating' => [
+            // creating rules
+        ],
+    ],
+];
+```
+
+#### 3 - Recovering rules
+After the namespace is properly configured you can easily retrieve the rules by combining the namespace and file name.
+
+The `getRules` method returns an object [`Artesaos\Shield\Rules`](https://github.com/artesaos/shield/blob/master/src/Rules.php)
+ based on the requested file
+
+```php
+$rules = Shield::getRules('common::client'); # path/of/namespace/client.php
+$rules = app('shield')->getRules('users::post'); # path/of/users/post.php
+```
+
+```php
+$rules->getDefaultRules();
+$rules->getCreatingRules();
+$rules->getUpdatingRules();
+$rules->byRequestType($type); # post or put
+```
