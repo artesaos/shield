@@ -7,7 +7,7 @@ use Artesaos\Shield\Contracts\Manager as ManagerContract;
 
 class ShieldServiceProvider extends ServiceProvider
 {
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Register the service provider.

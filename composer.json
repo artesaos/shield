@@ -1,16 +1,29 @@
 {
-    "name": "vinicius/shield",
+    "name": "artesaos/shield",
     "description": "A model shield for laravel",
     "type": "package",
-    "require": {
-        "illuminate/support": "~5.1 || ~5.2"
-    },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Vinicius Reis",
-            "email": "luiz.vinicius73@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Vinicius Reis",
+        "email": "luiz.vinicius73@gmail.com"
+    }],
+    "require": {
+      "illuminate/support": "~5.1 || ~5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0|^5.0",
+        "orchestra/testbench": "~3.0",
+        "mockery/mockery": "^0.9.4"
+    },
+    "autoload": {
+      "psr-4": {
+        "Artesaos\\Shield\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Artesaos\\Shield\\Test\\": "tests/"
+      }
+    },
     "minimum-stability": "stable"
 }
