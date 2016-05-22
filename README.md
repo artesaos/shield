@@ -153,7 +153,7 @@ Now your validation rules are centralized, the summary is extremely simple now.
 ```php
 namespace App\Http\Requests;
 
-use Orios\Models\Client;
+use App\Models\Client;
 
 class ClientFormRequest extends Request
 {
