@@ -33,12 +33,12 @@ In order to use the `Shield` facade, you need to register it on the `config/app.
 // file END ommited
 ```
 
-### Usage
+## Usage
 
 Operation Shield is simple. You add locations as *namespaces*.
 In the places you add files and uses namespaces to recover the files, each file contains a list of rules.
 
-#### 1 - Defining namespaces
+### 1 - Defining namespaces
 
 The initial setting is very simple, you determine the folder and the corresponding namespace.
 
@@ -80,7 +80,7 @@ class UsersServiceProvider extends ServiceProvider
 }
 ```
 
-#### 2 - Defining rules
+### 2 - Defining rules
 
 The rules file is quite simple, it returns an array as configuration of the own laravel.
 Within this array you have a key called `rules` and within it you have up to three keys: `default`, `updating` and `creating`.
@@ -105,7 +105,7 @@ return [
 ];
 ```
 
-#### 3 - Recovering rules
+### 3 - Recovering rules
 After the namespace is properly configured you can easily retrieve the rules by combining the namespace and file name.
 
 The `getRules` method returns an object [`Artesaos\Shield\Rules`](https://github.com/artesaos/shield/blob/master/src/Rules.php)
@@ -123,7 +123,7 @@ $rules->getUpdatingRules();
 $rules->byRequestType($type); # post or put
 ```
 
-#### 4 - Trait/Models
+### 4 - Trait/Models
 [`Artesaos\Shield\Rules\HaRules`](https://github.com/artesaos/shield/blob/master/src/Traits/HasRules.php) is a trait to facilitate interaction with the rules from a model.
 
 You need to import the trait for your model and set a value for the constant `rulesKey`
