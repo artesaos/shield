@@ -1,0 +1,16 @@
+{
+    "name": "vinicius/shield",
+    "description": "A model shield for laravel",
+    "type": "package",
+    "require": {
+        "illuminate/support": "~5.1 || ~5.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vinicius Reis",
+            "email": "luiz.vinicius73@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
