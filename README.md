@@ -145,3 +145,24 @@ class Client extends Model
 ```php
 $rules = Client::getRules();
 ```
+
+### 5 - FormRequest
+
+Now your validation rules are centralized, the summary is extremely simple now.
+
+```php
+namespace App\Http\Requests;
+
+use Orios\Models\Client;
+
+class ClientFormRequest extends Request
+{
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return Client::getRules()->byRequestType($this->getMethod());
+    }
+}
+```
