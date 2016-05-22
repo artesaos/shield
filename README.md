@@ -122,3 +122,26 @@ $rules->getCreatingRules();
 $rules->getUpdatingRules();
 $rules->byRequestType($type); # post or put
 ```
+
+#### 4 - Trait/Models
+[`Artesaos\Shield\Rules\HaRules`](https://github.com/artesaos/shield/blob/master/src/Traits/HasRules.php) is a trait to facilitate interaction with the rules from a model.
+
+You need to import the trait for your model and set a value for the constant `rulesKey`
+
+```php
+namespace App\Models\Client;
+
+use Illuminate\Database\Eloquent\Model;
+use Artesaos\Shield\Rules\HaRules;
+
+class Client extends Model
+{
+    use HasRules;
+
+    const rulesKey = 'common::client';
+}
+```
+
+```php
+$rules = Client::getRules();
+```
