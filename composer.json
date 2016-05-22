@@ -1,6 +1,6 @@
 {
     "name": "artesaos/shield",
-    "description": "A model shield for laravel",
+    "description": "A simple way to centralize your validation rules for laravel",
     "type": "package",
     "license": "MIT",
     "authors": [{
