@@ -170,4 +170,4 @@ class ClientFormRequest extends Request
 ## Credits
 
 - Author: [@vinicius73](https://github.com/vinicius73)
-- Licence: MIT
+- License: MIT
