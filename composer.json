@@ -7,6 +7,19 @@
         "name": "Vinicius Reis",
         "email": "luiz.vinicius73@gmail.com"
     }],
+    "keywords":          [
+      "laravel",
+      "validation",
+      "rules",
+      "form request",
+      "modules",
+      "ddd"
+    ],
+    "homepage": "https://github.com/artesaos/shield",
+    "support": {
+      "issues": "https://github.com/artesaos/shield/issues",
+      "source": "https://github.com/artesaos/shield"
+    },
     "require": {
       "illuminate/support": "~5.1 || ~5.2",
       "illuminate/filesystem": "~5.1 || ~5.2"
