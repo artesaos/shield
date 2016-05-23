@@ -29,7 +29,7 @@ class ShieldServiceProviderTest extends BaseTest
             [
                 \Artesaos\Shield\Contracts\Manager::class,
                 \Artesaos\Shield\Manager::class,
-            ],[
+            ], [
                 \Artesaos\Shield\Manager::class,
                 \Artesaos\Shield\Contracts\Manager::class,
             ],
