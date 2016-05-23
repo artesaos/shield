@@ -8,6 +8,6 @@ class Shield extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'opengraph';
+        return 'shield';
     }
 }
