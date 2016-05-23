@@ -40,7 +40,7 @@ class ShieldServiceProviderTest extends BaseTest
             [
                 \Artesaos\Shield\Contracts\Manager::class,
                 'shield',
-            ]
+            ],
         ];
     }
 }
