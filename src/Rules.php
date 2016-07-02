@@ -6,68 +6,14 @@ use Artesaos\Shield\Contracts\Rules as RulesContract;
 
 class Rules implements RulesContract
 {
-    /**
-     * @var array
-     */
-    private $rules;
-
-    /**
-     * @var array
-     */
-    private $messages;
-
-    /**
-     * Rules constructor.
-     *
-     * @param array $rules
-     * @param array $messages
-     */
-    public function __construct(array $rules, array $messages = [])
+    public function defaultRules()
     {
-        $this->rules = $rules;
-        $this->messages = $messages;
+        return [];
     }
 
-    /**
-     * Get default rules.
-     *
-     * @return array
-     */
-    public function getDefaultRules()
+    protected function returnRules(array $rules = [])
     {
-        return array_get($this->rules, 'default', []);
-    }
-
-    /**
-     * Get creating rules.
-     *
-     * @return array
-     */
-    public function getCreatingRules()
-    {
-        $creating = array_get($this->rules, 'creating', []);
-
-        return array_merge($this->getDefaultRules(), $creating);
-    }
-
-    /**
-     * Get updating rules.
-     *
-     * @return array
-     */
-    public function getUpdatingRules()
-    {
-        $creating = array_get($this->rules, 'updating', []);
-
-        return array_merge($this->getDefaultRules(), $creating);
-    }
-
-    /**
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->messages;
+        return array_merge($this->defaultRules(), $rules);
     }
 
     /**
@@ -81,13 +27,13 @@ class Rules implements RulesContract
 
         switch ($type) {
             case 'post':
-                return $this->getCreatingRules();
+                return method_exists($this, 'creating') ? $this->creating() : [];
                 break;
             case 'put':
-                return $this->getUpdatingRules();
+                return method_exists($this, 'updating') ? $this->updating() : [];
                 break;
             default:
-                return $this->getDefaultRules();
+                return $this->defaultRules();
         }
     }
 }

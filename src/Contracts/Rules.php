@@ -5,30 +5,14 @@ namespace Artesaos\Shield\Contracts;
 interface Rules
 {
     /**
-     * Get default rules.
-     *
-     * @return array
+     * @return mixed
      */
-    public function getDefaultRules();
+    public function defaultRules();
 
     /**
-     * Get creating rules.
-     *
-     * @return array
+     * @return mixed
      */
-    public function getCreatingRules();
-
-    /**
-     * Get updating rules.
-     *
-     * @return array
-     */
-    public function getUpdatingRules();
-
-    /**
-     * @return array
-     */
-    public function getMessages();
+    public function returnRules();
 
     /**
      * @param string $type

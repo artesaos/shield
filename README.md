@@ -1,173 +1,110 @@
 # Artesaos - Shield
-> A simple way to centralize your validation rules
 
-## Installation
-### 1 - Dependency
-The first step is using composer to install the package and automatically update your `composer.json` file, you can do this by running:
+Artesãos Shield provides you a simple way to centralize your validation rules. It was mainly designed to solve the FormRequest rules practice, that is valid outside HTTP requests.
+
+
+### Installing
+The package installation can be done with composer by the following command:
+
 ```shell
 composer require artesaos/shield
 ```
 
-### 2 - Provider
-You need to update your application configuration in order to register the package so it can be loaded by Laravel, just update your `config/app.php` file adding the following code at the end of your `'providers'` section:
-
-```php
-// file START ommited
-    'providers' => [
-        // other providers ommited
-        Artesaos\Shield\ShieldServiceProvider::class,
-    ],
-// file END ommited
-```
-
-### 3 - Facade (Optional)
-
-In order to use the `Shield` facade, you need to register it on the `config/app.php` file, you can do that the following way:
-
-```php
-// file START ommited
-    'aliases' => [
-        // other Facades ommited
-        'Shield' => Artesaos\Shield\Facades\Shield::class,
-    ],
-// file END ommited
-```
+Shield **does not** provides Facades or ServiceProviders, they aren't needed.
 
 ## Usage
 
-Operation Shield is simple. You add locations as *namespaces*.
-In the places you add files and uses namespaces to recover the files, each file contains a list of rules.
-
-### 1 - Defining namespaces
-
-The initial setting is very simple, you determine the folder and the corresponding namespace.
+#### 1 - Defining Rules
+Operating Shield is simple. It starts by defining a rules class for your model or other kind of entity. Take a look on the following example:
 
 ```php
-namespace App\Providers;
+<?php
 
-use Illuminate\Support\ServiceProvider;
+namespace App\Domains\Users\Rules;
 
-class AppServiceProvider extends ServiceProvider
+use Artesaos\Shield\Rules
+
+class UserRules extends Rules
 {
-    public function boot()
-    {
-        $path = __DIR__ . '/../shield/';
-        $this->app['shield']
-             ->addRulesNamespace($path, 'common') # app/shield/
-             ->addRulesNamespace($path . 'users', 'users'); # app/shield/users
-            // addRulesNamespace($path, $namespace);
-    }
-    // ommited
+	public function default()
+	{
+		return [
+			'name' => 'required|min:6',
+		];
+	}
+
+	public function creating()
+	{
+		// returnRules method should be used
+		// whenever the rules should be merged
+		// with the default ones.
+		return $this->returnRules([
+			'email' => 'required|email',
+		]);
+	}
+
+	// any other methods / actions that needs rules
+
 }
 ```
 
-Shield is designed to be modular, you can define different namespaces in different service providers
+#### 2 - Enabling Rules
+You could instantiate the rules by hand, but the recommended way of doing it is setting a static property into the class that owns the rules and using the proper trait
+
 
 ```php
-namespace App\Domains\Users\Providers;
+<?php
 
-use Illuminate\Support\ServiceProvider;
+// some other use statements here
+use Artesaos\Shield\HasRules;
+use App\Domains\Users\Rules\UserRules;
 
-class UsersServiceProvider extends ServiceProvider
+class User extends Model
 {
-    public function boot()
-    {
-        # /app/Domains/Users/rules
-        $this->app['shield']->addRulesNamespace(__DIR__ . '/../rules', 'users');
-    }
+	// using the rules trait
+	use HasRules;
 
-    // ommited
+	// setting the rules class
+	protected static $rulesFrom = UserRules::class
+
+	// some model stuff here
 }
 ```
 
-### 2 - Defining rules
 
-The rules file is quite simple, it returns an array as configuration of the own laravel.
-Within this array you have a key called `rules` and within it you have up to three keys: `default`, `updating` and `creating`.
 
-As you will see later on you can retrieve the rules with these three contexts.
-The key `default` will be in all contexts. The others will merge with `default` as they are requested.
+
+#### 3 - Usage
+
+Whenever you need to access the rules, you can do it by creating a new instance of the rules class, or just using the classes (mainly models) you enabled.
 
 ```php
-# path/of/namespace/file_rule.php
-return [
-    'rules' => [
-        'default' => [
-            // default rules
-        ],
-        'updating' => [
-            // updating rules
-        ],
-        'creating' => [
-            // creating rules
-        ],
-    ],
-];
+User::rules()->creating();
+
+User::rules()->updating();
+
+User::rules()->yourCustomMethodForACustomAction();
+
+User::rules()->whatever();
 ```
 
-### 3 - Recovering rules
-After the namespace is properly configured you can easily retrieve the rules by combining the namespace and file name.
 
-The `getRules` method returns an object [`Artesaos\Shield\Rules`](https://github.com/artesaos/shield/blob/master/src/Rules.php)
- based on the requested file
+A really nice way of using it inside FormRequests are by passing the current HTTP method, that will be translated to the corresponding rules method (that's a convention)
+
 
 ```php
-$rules = Shield::getRules('common::client'); # path/of/namespace/client.php
-$rules = app('shield')->getRules('users::post'); # path/of/users/post.php
-```
 
-```php
-$rules->getDefaultRules();
-$rules->getCreatingRules();
-$rules->getUpdatingRules();
-$rules->byRequestType($type); # post or put
-```
+// inside a form request
+User::rules()->byRequestType($this->getMethod());
 
-### 4 - Trait/Models
-[`Artesaos\Shield\Rules\HaRules`](https://github.com/artesaos/shield/blob/master/src/Traits/HasRules.php) is a trait to facilitate interaction with the rules from a model.
+// wherever you have a request instance
+User::rules()->byRequestType($request->getMethod());
 
-You need to import the trait for your model and set a value for the constant `rulesKey`
 
-```php
-namespace App\Models\Client;
-
-use Illuminate\Database\Eloquent\Model;
-use Artesaos\Shield\Rules\HaRules;
-
-class Client extends Model
-{
-    use HasRules;
-
-    const rulesKey = 'common::client';
-}
-```
-
-```php
-$rules = Client::getRules();
-```
-
-### 5 - FormRequest
-
-Now your validation rules are centralized, the summary is extremely simple now.
-
-```php
-namespace App\Http\Requests;
-
-use App\Models\Client;
-
-class ClientFormRequest extends Request
-{
-    /**
-     * @return array
-     */
-    public function rules()
-    {
-        return Client::getRules()->byRequestType($this->getMethod());
-    }
-}
 ```
 
 ## Credits
 
 - Author: [@vinicius73](https://github.com/vinicius73)
+- Version 1 Refactoring [@hernandev](https://github.com/hernandev)
 - License: MIT
