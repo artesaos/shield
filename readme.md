@@ -26,7 +26,7 @@ use Artesaos\Shield\Rules
 
 class UserRules extends Rules
 {
-	public function default()
+	public function defaultRules()
 	{
 		return [
 			'name' => 'required|min:6',
