@@ -7,37 +7,28 @@
         "name": "Vinicius Reis",
         "email": "luiz.vinicius73@gmail.com"
     }],
-    "keywords":          [
-      "laravel",
-      "validation",
-      "rules",
-      "form request",
-      "modules",
-      "ddd"
+    "keywords": [
+        "laravel",
+        "validation",
+        "rules",
+        "form request",
+        "modules",
+        "ddd"
     ],
     "homepage": "https://github.com/artesaos/shield",
     "support": {
-      "issues": "https://github.com/artesaos/shield/issues",
-      "source": "https://github.com/artesaos/shield"
+        "issues": "https://github.com/artesaos/shield/issues",
+        "source": "https://github.com/artesaos/shield"
     },
     "require": {
-      "illuminate/support": "~5.1 || ~5.2",
-      "illuminate/filesystem": "~5.1 || ~5.2"
+        "illuminate/support": "~5.1 || ~5.2",
+        "illuminate/filesystem": "~5.1 || ~5.2"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.0|^5.0",
-        "orchestra/testbench": "~3.0",
-        "mockery/mockery": "^0.9.4"
-    },
+    "require-dev": {},
     "autoload": {
-      "psr-4": {
-        "Artesaos\\Shield\\": "src/"
-      }
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "Artesaos\\Shield\\Test\\": "tests/"
-      }
+        "psr-4": {
+            "Artesaos\\Shield\\": "src/"
+        }
     },
     "minimum-stability": "stable"
 }
