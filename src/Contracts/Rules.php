@@ -10,11 +10,6 @@ interface Rules
     public function defaultRules();
 
     /**
-     * @return mixed
-     */
-    public function returnRules();
-
-    /**
      * @param string $type
      *
      * @return array
