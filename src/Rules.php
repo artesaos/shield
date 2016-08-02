@@ -11,26 +11,32 @@ class Rules implements RulesContract
         return [];
     }
 
-    protected function returnRules(array $rules = [])
+    protected function returnRules(array $rules = [], $callback = null)
     {
-        return array_merge($this->defaultRules(), $rules);
+        $rules = array_merge($this->defaultRules(), $rules);
+        if (is_callable($callback)) {
+            return $callback($rules);
+        }
+
+        return $rules;
     }
 
     /**
-     * @param string $type
+     * @param string  $type
+     * @param mixed $callback
      *
      * @return array
      */
-    public function byRequestType($type)
+    public function byRequestType($type, $callback = null)
     {
         $type = mb_strtolower($type);
 
         switch ($type) {
             case 'post':
-                return method_exists($this, 'creating') ? $this->creating() : [];
+                return method_exists($this, 'creating') ? $this->creating($callback) : [];
                 break;
             case 'put':
-                return method_exists($this, 'updating') ? $this->updating() : [];
+                return method_exists($this, 'updating') ? $this->updating($callback) : [];
                 break;
             default:
                 return $this->defaultRules();
