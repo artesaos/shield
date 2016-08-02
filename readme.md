@@ -33,14 +33,14 @@ class UserRules extends Rules
 		];
 	}
 
-	public function creating()
+	public function creating($callback=null)
 	{
 		// returnRules method should be used
 		// whenever the rules should be merged
 		// with the default ones.
 		return $this->returnRules([
 			'email' => 'required|email',
-		]);
+		], $callback);
 	}
 
 	// any other methods / actions that needs rules
