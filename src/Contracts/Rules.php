@@ -10,9 +10,10 @@ interface Rules
     public function defaultRules();
 
     /**
-     * @param string $type
+     * @param string  $type
+     * @param mixed $callback
      *
      * @return array
      */
-    public function byRequestType($type);
+    public function byRequestType($type, $callback = null);
 }
