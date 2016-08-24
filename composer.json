@@ -3,10 +3,16 @@
     "description": "A simple way to centralize your validation rules for laravel",
     "type": "package",
     "license": "MIT",
-    "authors": [{
-        "name": "Vinicius Reis",
-        "email": "luiz.vinicius73@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Vinicius Reis",
+            "email": "luiz.vinicius73@gmail.com"
+        },
+        {
+            "name": "Diego Hernandes",
+            "email": "diego@hernandev.com"
+        }
+    ],
     "keywords": [
         "laravel",
         "validation",
@@ -21,8 +27,8 @@
         "source": "https://github.com/artesaos/shield"
     },
     "require": {
-        "illuminate/support": "~5.1 || ~5.2",
-        "illuminate/filesystem": "~5.1 || ~5.2"
+        "illuminate/support": "~5.1 || ~5.2 || ~5.3",
+        "illuminate/filesystem": "~5.1 || ~5.2 || ~5.3"
     },
     "require-dev": {},
     "autoload": {
